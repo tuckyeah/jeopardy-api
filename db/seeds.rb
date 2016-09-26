@@ -11,6 +11,7 @@ CSV.foreach('lib/seeds/small_jeopardy.csv',
               headers: true,
               header_converters: -> (h) { h.lstrip.downcase.to_sym } ) do |row|
                 c = row.to_h
+                category = Category.create([ { name: c[:category] }])
                 Clue.create([{ question: c[:question], answer: c[:answer],
-                               value: c[:value] }])
+                               value: c[:value], category_id: category.first.id }])
               end

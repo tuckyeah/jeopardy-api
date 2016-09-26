@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories, except: [:new, :edit]
   resources :clues, except: [:new, :edit]
   resources :examples, except: [:new, :edit]
   post '/sign-up' => 'users#signup'
