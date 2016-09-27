@@ -8,10 +8,15 @@
 require 'csv'
 
 CSV.foreach('lib/seeds/small_jeopardy.csv',
-              headers: true,
-              header_converters: -> (h) { h.lstrip.downcase.to_sym } ) do |row|
-                c = row.to_h
-                category = Category.create([ { name: c[:category] }])
-                Clue.create([{ question: c[:question], answer: c[:answer],
-                               value: c[:value], category_id: category.first.id }])
+            headers: true,
+            header_converters: -> (h) { h.lstrip.downcase.to_sym }) do |row|
+              c = row.to_h
+              c[:value].rstrip!
+              if Category.all.where(name: c[:category]).length == 1 # there's gotta be a better way to do this
+                category = Category.all.where(name: c[:category])
+              else
+                category = Category.create([{ name: c[:category] }])
               end
+              Clue.create([{ question: c[:question], answer: c[:answer],
+                             value: c[:value], category_id: category.first.id }])
+            end

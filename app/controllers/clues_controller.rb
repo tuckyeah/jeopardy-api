@@ -54,6 +54,6 @@ class CluesController < ApplicationController
     end
 
     def clue_params
-      params.require(:clue).permit(:question, :answer, :value)
+      params.require(:clue).permit(:question, :answer, :value, :category_id)
     end
 end
