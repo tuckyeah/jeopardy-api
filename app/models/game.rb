@@ -20,9 +20,4 @@ class Game < ActiveRecord::Base
   def create_response
     build_response(game_id: id)
   end
-
-
-
-# make sure we reset the categories game_ids to nil when we are finished
-# i'm going to need a join table i think for these games, where we'll assign ids
 end

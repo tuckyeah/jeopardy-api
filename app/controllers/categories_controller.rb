@@ -47,6 +47,14 @@ class CategoriesController < ApplicationController
     head :no_content
   end
 
+  def random
+    cat_num = rand(Category.all.length + 1).to_i
+    @category = Category.find(cat_num)
+
+    @clue = @category.clues.sample
+    render json: [@category.name, @clue]
+  end
+
   private
 
     def set_category

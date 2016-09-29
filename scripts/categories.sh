@@ -5,6 +5,13 @@ curl --include --request GET 'http://localhost:3000/categories'
 curl --include --request GET "http://localhost:3000/categories/3"
 # POST
 
+curl --include --request POST http://localhost:3000/games \
+  --header "Content-Type: application/json" \
+  --data '{
+    "game": {
+    }
+  }'
+
 # PATCH
 
 # DELETE
