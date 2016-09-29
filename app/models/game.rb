@@ -1,20 +1,18 @@
 class Game < ActiveRecord::Base
   after_create :assign_id
-  has_many :categories, dependent: :destroy
+  has_many :categories
   belongs_to :user
-  accepts_nested_attributes_for :categories
 
+  # On creation of a new game, picks three random categories
+  # and updates their game_ids to match this current game id
   def assign_id
-    puts "Game id is: #{self.id}"
-    game_id = self.id
+    puts "Game id is: #{id}"
+    game_id = id
     @categories = Category.where(id: Category.pluck(:id).sample(3))
     @categories.map { |cat| cat.game_id = game_id }
-    @categories.each { |cat| cat.save }
+    @categories.each(&:save)
   end
 
-# on game creation, pick five categories and update those game_ids to reflect
-# the id of the new game, so they are linked
-
-
-
+# make sure we reset the categories game_ids to nil when we are finished
+# i'm going to need a join table i think for these games, where we'll assign ids
 end
