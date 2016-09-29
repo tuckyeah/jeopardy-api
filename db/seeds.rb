@@ -19,6 +19,7 @@ def convert_to_hash
   arr
 end
 
+
 def create_categories(data)
   data.each do |hsh|
     categories = Category.all

@@ -16,4 +16,4 @@
 #                password: 'abc123',
 #                password_confirmation: nil)
 # end
-Game.create
+game = Game.create
