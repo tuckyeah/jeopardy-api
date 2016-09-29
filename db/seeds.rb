@@ -28,15 +28,21 @@ def create_categories(data)
   end
 end
 
+def convert_val_to_num(num)
+  num.slice(/\d+/).to_i
+end
+
 def populate_categories(data)
   data.each do |hsh|
     category_id = Category.where(name: hsh[:category]).ids[0]
     unless hsh[:question].include? '<a href=' or hsh[:answer].include? '<a href='
+      hsh[:value] = convert_val_to_num(hsh[:value].rstrip)
       Clue.create([{ question: hsh[:question], answer: hsh[:answer],
-                     value: hsh[:value].rstrip, category_id: category_id }])
+                     value: hsh[:value], category_id: category_id }])
     end
   end
 end
+
 
 data = convert_to_hash
 create_categories(data)

@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   def index
-    @categories = Category.take(3)
-    render json: @categories
+    @games = Game.first # i realize this won't show all games, it's just for testing
+    render json: @games.categories
   end
 end
