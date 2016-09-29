@@ -1,6 +1,5 @@
 class Response < ActiveRecord::Base
-  has_many :categories, as: :game_cats
-  belongs_to :game
+  belongs_to :user_input, polymorphic: true
 
   def categories
     Game.find(id).categories

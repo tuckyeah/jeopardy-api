@@ -11,20 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929204506) do
+ActiveRecord::Schema.define(version: 20160929224647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "game_cats_id"
-    t.string   "game_cats_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "game_id"
   end
 
-  add_index "categories", ["game_cats_type", "game_cats_id"], name: "index_categories_on_game_cats_type_and_game_cats_id", using: :btree
+  add_index "categories", ["game_id"], name: "index_categories_on_game_id", using: :btree
 
   create_table "clues", force: :cascade do |t|
     t.string   "question"
@@ -61,11 +60,15 @@ ActiveRecord::Schema.define(version: 20160929204506) do
 
   create_table "responses", force: :cascade do |t|
     t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "answer"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "user_input_id"
+    t.string   "user_input_type"
   end
 
   add_index "responses", ["game_id"], name: "index_responses_on_game_id", using: :btree
+  add_index "responses", ["user_input_type", "user_input_id"], name: "index_responses_on_user_input_type_and_user_input_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false
@@ -78,6 +81,7 @@ ActiveRecord::Schema.define(version: 20160929204506) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["token"], name: "index_users_on_token", unique: true, using: :btree
 
+  add_foreign_key "categories", "games"
   add_foreign_key "clues", "categories"
   add_foreign_key "examples", "users"
   add_foreign_key "games", "users"
