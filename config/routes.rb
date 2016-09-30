@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   delete '/sign-out/:id' => 'users#signout'
   patch '/change-password/:id' => 'users#changepw'
   resources :users, only: [:index, :show]
-  resources :games, only: [:index, :create]
+  resources :games, only: [:index, :create, :update]
 
   get '/random' => 'categories#random'
 end

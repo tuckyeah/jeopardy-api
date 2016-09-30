@@ -7,9 +7,12 @@ class GamesController < ApplicationController
   def show
   end
 
-  def create
+  def new
     @game = Game.create
     render json: @game
+  end
+
+  def create
   end
 
   def update
@@ -21,6 +24,14 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:user_id)
+    params.require(:game).permit(:user_id, :response)
+  end
+
+  def set_game
+    @game = Game.find(params[:id])
+  end
+
+  def set_category
+    @category = Game.categories.find(params[:id])
   end
 end
