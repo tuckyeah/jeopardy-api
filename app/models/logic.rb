@@ -1,6 +1,4 @@
-class Logic < ActiveRecord::Base
-  @@STOP_WORDS = ['AND', 'THE', 'OR'] # words to ignore when we're parsing an answer
-
+module Logic
   def remove_parens(answer)
     answer.scan(/\((\w+)\)\s*(\w*)/).flatten
   end
@@ -9,13 +7,19 @@ class Logic < ActiveRecord::Base
     answer.scan(/\((\w+)\)\s*(\w*)/).empty?
   end
 
-  def validate_answer(answer, response)
-    answer = remove_parens(answer) if include_parens(answer)
-    return true if answer.casecmp == response.casecmp
+  def evaluate_answer(answer, response)
+    answer.upcase!
+    answer = remove_parens(answer) unless include_parens?(answer)
 
-    answer.casecmp.include?(response.casecmp)
+    puts "answer is: #{answer}"
+    puts "response is: #{response}"
+    answer.include?(response.upcase)
   end
 
-  def increment_score
+  # def increment_score
+  # end
+
+  def test
+    puts "I ran"
   end
 end

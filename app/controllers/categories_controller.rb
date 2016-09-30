@@ -15,6 +15,11 @@ class CategoriesController < ApplicationController
     render json: @category
   end
 
+  def clues
+    @clues = @category.clues
+    render json: @clues
+  end
+
   # POST /categories
   # POST /categories.json
   def create

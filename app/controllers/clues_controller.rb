@@ -39,6 +39,18 @@ class CluesController < ApplicationController
     end
   end
 
+  def validate_answer
+    @answer = clue_params[:response]
+    @response = Response.create(answer: @answer)
+
+    if @response.validate
+    render json: @response
+  end
+
+   # while in here, get the response
+   # pass it to the response model
+   # and do validation there, before returning to clue controller.
+
   # DELETE /clues/1
   # DELETE /clues/1.json
   def destroy
@@ -54,6 +66,6 @@ class CluesController < ApplicationController
     end
 
     def clue_params
-      params.require(:clue).permit(:question, :answer, :value, :category_id)
+      params.require(:clue).permit(:question, :answer, :value, :category_id, :response)
     end
 end
