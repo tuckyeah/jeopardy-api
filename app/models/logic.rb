@@ -9,11 +9,12 @@ module Logic
 
   def evaluate_answer(answer, response)
     answer.gsub!(/[',]/, '')
+    response.gsub!(/[',]/, '')
     answer = remove_parens(answer) unless include_parens?(answer)
     #
-    # puts "answer is: #{answer}"
-    # puts "response is: #{response}"
-    answer.include?(response.upcase) || answer.casecmp(response).zero?
+    puts "answer is: #{answer}"
+    puts "response is: #{response}"
+    answer.casecmp(response).zero? ? true : answer.include?(response)
   end
 
   def test

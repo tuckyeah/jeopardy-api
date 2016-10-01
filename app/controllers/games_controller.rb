@@ -1,4 +1,4 @@
-class GamesController < ApplicationController
+class GamesController < ProtectedController
   before_action :set_game, only: [:show]
   def index
     @games = Game.all
