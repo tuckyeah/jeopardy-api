@@ -6,6 +6,7 @@ class CreateResponses < ActiveRecord::Migration
       t.integer :user_id
       t.boolean :correct, default: false
       t.string :clue_answer
+      t.integer :clue_id
 
       t.timestamps null: false
     end

@@ -42,16 +42,12 @@ class CluesController < ApplicationController
   def validate_answer
     @answer = clue_params[:response]
     @response = Response.find(params[:game_id])
-    @response.update(user_answer: @answer)
+    @response.update(user_answer: @answer, clue_id: params[:clue_id])
 
     @response.check_answer(params[:clue_id])
 
     render json: @response
   end
-
-   # while in here, get the response
-   # pass it to the response model
-   # and do validation there, before returning to clue controller.
 
   # DELETE /clues/1
   # DELETE /clues/1.json
@@ -63,11 +59,12 @@ class CluesController < ApplicationController
 
   private
 
-    def set_clue
-      @clue = Clue.find(params[:id])
-    end
+  def set_clue
+    @clue = Clue.find(params[:id])
+  end
 
-    def clue_params
-      params.require(:clue).permit(:question, :answer, :value, :category_id, :response)
-    end
+  def clue_params
+    params.require(:clue).permit(:question, :answer, :value,
+                                 :category_id, :response)
+  end
 end

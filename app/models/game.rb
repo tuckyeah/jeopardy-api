@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  after_create :assign_category_ids, :create_response
+  after_create :assign_category_ids, :create_response, :reset_clues
   has_many :categories
   has_one :response, as: :user_input
   belongs_to :user
@@ -16,5 +16,12 @@ class Game < ActiveRecord::Base
 
   def create_response
     build_response(game_id: id, user_id: user_id)
+  end
+
+  def reset_clues
+    @categories = Category.where(game_id: id)
+    @categories.each do |category|
+      category.clues.each { |clue| clue.update_attributes(answered: false) }
+    end
   end
 end

@@ -4,6 +4,7 @@ class CreateClues < ActiveRecord::Migration
       t.string :question
       t.string :answer
       t.string :value
+      t.boolean :answered, default: false
 
       t.timestamps null: false
     end

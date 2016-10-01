@@ -8,7 +8,7 @@ module Logic
   end
 
   def evaluate_answer(answer, response)
-    answer.gsub(/[',]/, '').upcase!
+    answer.upcase!.gsub(/[',]/, '')
     answer = remove_parens(answer) unless include_parens?(answer)
 
     puts "answer is: #{answer}"

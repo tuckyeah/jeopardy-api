@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :update, :destroy]
+  before_action :set_category, only: [:show, :update, :destroy, :clues]
 
   # GET /categories
   # GET /categories.json
@@ -16,7 +16,7 @@ class CategoriesController < ApplicationController
   end
 
   def clues
-    @clues = @category.clues
+    @clues = @category.clues.where(answered: false)
     render json: @clues
   end
 

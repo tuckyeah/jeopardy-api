@@ -28,8 +28,9 @@ ActiveRecord::Schema.define(version: 20160930193826) do
   create_table "clues", force: :cascade do |t|
     t.string   "question"
     t.string   "answer"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "answered",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "category_id"
     t.integer  "value"
   end
@@ -64,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160930193826) do
     t.integer  "user_id"
     t.boolean  "correct",         default: false
     t.string   "clue_answer"
+    t.integer  "clue_id"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.integer  "user_input_id"
