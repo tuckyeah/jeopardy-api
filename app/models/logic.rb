@@ -8,7 +8,7 @@ module Logic
   end
 
   def evaluate_answer(answer, response)
-    answer.upcase!
+    answer.gsub(/[',]/, '').upcase!
     answer = remove_parens(answer) unless include_parens?(answer)
 
     puts "answer is: #{answer}"
@@ -20,6 +20,6 @@ module Logic
   # end
 
   def test
-    puts "I ran"
+    puts 'I ran'
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929224647) do
+ActiveRecord::Schema.define(version: 20160930193826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,9 +60,12 @@ ActiveRecord::Schema.define(version: 20160929224647) do
 
   create_table "responses", force: :cascade do |t|
     t.integer  "game_id"
-    t.string   "answer"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "user_answer"
+    t.integer  "user_id"
+    t.boolean  "correct",         default: false
+    t.string   "clue_answer"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "user_input_id"
     t.string   "user_input_type"
   end
@@ -71,11 +74,12 @@ ActiveRecord::Schema.define(version: 20160929224647) do
   add_index "responses", ["user_input_type", "user_input_id"], name: "index_responses_on_user_input_type_and_user_input_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",           null: false
-    t.string   "token",           null: false
-    t.string   "password_digest", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "email",                       null: false
+    t.string   "token",                       null: false
+    t.string   "password_digest",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "score",           default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

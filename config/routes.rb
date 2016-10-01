@@ -12,5 +12,5 @@ Rails.application.routes.draw do
 
   get '/random' => 'categories#random'
   get '/categories/:id/clues' => 'categories#clues'
-  patch '/answers/:id' => 'clues#validate_answer'
+  patch '/answer/:clue_id/:game_id' => 'clues#validate_answer'
 end

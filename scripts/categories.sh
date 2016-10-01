@@ -12,6 +12,23 @@ curl --include --request POST http://localhost:3000/games \
     }
   }'
 
+  curl --include --request PATCH http://localhost:3000/answer/6/1 \
+    --header "Content-Type: application/json" \
+    --data '{
+      "clue": {
+        "response": "ant"
+      }
+    }'
+
+
+  curl --include --request POST http://localhost:3000/games \
+    --header "Content-Type: application/json" \
+    --data '{
+      "clue": {
+        "user_id": 1
+      }
+    }'
+
 # PATCH
 
 # DELETE

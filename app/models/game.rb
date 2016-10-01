@@ -15,6 +15,6 @@ class Game < ActiveRecord::Base
   end
 
   def create_response
-    build_response(game_id: id)
+    build_response(game_id: id, user_id: user_id)
   end
 end

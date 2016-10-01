@@ -8,13 +8,17 @@ class Response < ActiveRecord::Base
   end
 
   def check_answer(clue_id)
-    @clue_answer = Clue.find(clue_id).answer
-    @user_answer = answer
+    @right_answer = Clue.find(clue_id).answer
+    update_attributes(clue_answer: @right_answer)
 
-    if evaluate_answer(@clue_answer, @user_answer)
-      puts "You won $#{Clue.find(clue_id).value}"
+    if evaluate_answer(clue_answer, user_answer)
+      self.correct = true
+      # @user = Game.find(id).user_id
+      # @winnings = Clue.find(clue_id).value
+      # @user.update(score: @winnings)
+      # @user
     else
-      puts "No dice"
+      self.correct = false
     end
   end
 end

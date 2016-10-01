@@ -41,9 +41,11 @@ class CluesController < ApplicationController
 
   def validate_answer
     @answer = clue_params[:response]
-    @response = Response.create(answer: @answer)
+    @response = Response.find(params[:game_id])
+    @response.update(user_answer: @answer)
 
-    if @response.validate
+    @response.check_answer(params[:clue_id])
+
     render json: @response
   end
 
