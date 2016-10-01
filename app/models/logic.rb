@@ -8,16 +8,13 @@ module Logic
   end
 
   def evaluate_answer(answer, response)
-    answer.upcase!.gsub(/[',]/, '')
+    answer.gsub!(/[',]/, '')
     answer = remove_parens(answer) unless include_parens?(answer)
-
-    puts "answer is: #{answer}"
-    puts "response is: #{response}"
-    answer.include?(response.upcase)
+    #
+    # puts "answer is: #{answer}"
+    # puts "response is: #{response}"
+    answer.include?(response.upcase) || answer.casecmp(response).zero?
   end
-
-  # def increment_score
-  # end
 
   def test
     puts 'I ran'

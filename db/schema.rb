@@ -18,8 +18,9 @@ ActiveRecord::Schema.define(version: 20160930193826) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "complete",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "game_id"
   end
 

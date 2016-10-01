@@ -22,6 +22,7 @@ class Game < ActiveRecord::Base
     @categories = Category.where(game_id: id)
     @categories.each do |category|
       category.clues.each { |clue| clue.update_attributes(answered: false) }
+      category.update_attributes(complete: false)
     end
   end
 end

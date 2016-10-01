@@ -13,13 +13,18 @@ class Response < ActiveRecord::Base
     Clue.find(clue_id).update_attributes(answered: true)
 
     if evaluate_answer(clue_answer, user_answer)
+      # increment_score(clue_id)
       update_attributes(correct: true)
-      # @user = Game.find(id).user_id
-      # @winnings = Clue.find(clue_id).value
-      # @user.update(score: @winnings)
-      # @user
     else
       update_attributes(correct: false)
     end
+  end
+
+  private
+
+  def increment_score(clue_id)
+    @user = User.find(Game.find(id).user_id)
+    @winnings = Clue.find(clue_id).value
+    @user.update(score: @winnings)
   end
 end

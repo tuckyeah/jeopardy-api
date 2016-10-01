@@ -21,13 +21,6 @@ curl --include --request POST http://localhost:3000/games \
     }'
 
 
-  curl --include --request POST http://localhost:3000/games \
-    --header "Content-Type: application/json" \
-    --data '{
-      "clue": {
-        "user_id": 1
-      }
-    }'
 
 # PATCH
 
