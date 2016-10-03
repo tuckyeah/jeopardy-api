@@ -57,6 +57,13 @@ class UsersController < ProtectedController
     head :bad_request
   end
 
+  def reset_score
+    @user = User.find(params[:id])
+    @user.update(score: 0)
+
+    render json: @user
+  end
+
   private
 
   def user_creds

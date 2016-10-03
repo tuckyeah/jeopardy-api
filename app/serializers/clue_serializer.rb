@@ -1,3 +1,3 @@
 class ClueSerializer < ActiveModel::Serializer
-  attributes :id, :question, :answer, :value, :category, :answered
+  attributes :id, :question, :value, :category, :answered
 end

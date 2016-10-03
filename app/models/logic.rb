@@ -1,6 +1,6 @@
 module Logic
   def remove_parens(answer)
-    answer.scan(/\((\w+)\)\s*(\w*)/).flatten
+    answer.scan(/\((\w+)\)\s*(\w*)/).flatten.join(' ')
   end
 
   def include_parens?(answer)
@@ -11,10 +11,9 @@ module Logic
     answer.gsub!(/[',]/, '')
     response.gsub!(/[',]/, '')
     answer = remove_parens(answer) unless include_parens?(answer)
-    #
     puts "answer is: #{answer}"
     puts "response is: #{response}"
-    answer.casecmp(response).zero? ? true : answer.include?(response)
+    answer.include?(response) ? true : answer.casecmp(response).zero?
   end
 
   def test

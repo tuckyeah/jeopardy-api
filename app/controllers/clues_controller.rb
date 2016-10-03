@@ -1,4 +1,4 @@
-class CluesController < ApplicationController
+class CluesController < ProtectedController
   before_action :set_clue, only: [:show, :update, :destroy]
 
   # GET /clues

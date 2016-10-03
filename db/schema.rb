@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(version: 20160930193826) do
   add_index "examples", ["user_id"], name: "index_examples_on_user_id", using: :btree
 
   create_table "games", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "over",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "user_id"
   end
 
