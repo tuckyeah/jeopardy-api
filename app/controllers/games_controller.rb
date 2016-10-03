@@ -39,7 +39,7 @@ class GamesController < ProtectedController
   private
 
   def game_params
-    params.require(:game).permit(:user_id)
+    params.require(:game).permit(:user_id, :num_categories)
   end
 
   def set_game

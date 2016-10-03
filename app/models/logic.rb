@@ -7,13 +7,23 @@ module Logic
     answer.scan(/\((\w+)\)\s*(\w*)/).empty?
   end
 
-  def evaluate_answer(answer, response)
-    answer.gsub!(/[',]/, '')
-    response.gsub!(/[',]/, '')
-    answer = remove_parens(answer) unless include_parens?(answer)
-    puts "answer is: #{answer}"
+  def parse(answer)
+    # strips both correct answer and user response of commas and
+    # apostrophes, as well as any 'filler words', and downcases them both
+    answer.gsub(/[',]/, '').gsub(/^(the|a|an) /i, '').strip.downcase
+  end
+
+  def evaluate_answer(correct, response)
+    correct = parse(correct)
+    response = parse(response)
+
+    correct = remove_parens(correct) unless include_parens?(correct)
+    puts "answer is: #{correct}"
     puts "response is: #{response}"
-    answer.include?(response) ? true : answer.casecmp(response).zero?
+    # uses 'WhiteSimiliarity' gem to create a 'fuzzy' match to account
+    # for typos
+    fuzzy_match = WhiteSimilarity.similarity(correct, response)
+    correct == response || fuzzy_match > 0.5
   end
 
   def test

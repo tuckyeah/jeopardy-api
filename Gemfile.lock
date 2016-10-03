@@ -156,6 +156,7 @@ GEM
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    whitesimilarity (0.0.2)
 
 PLATFORMS
   ruby
@@ -177,6 +178,7 @@ DEPENDENCIES
   rspec-rails (~> 3.4.2)
   spring (~> 1.6.4)
   spring-commands-rspec (~> 1.0.4)
+  whitesimilarity
 
 RUBY VERSION
    ruby 2.3.1p112

@@ -7,6 +7,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'rack-cors', require: 'rack/cors'
 gem 'pg'
 gem 'bcrypt', '~> 3.1.11'
+gem 'whitesimilarity'
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'

@@ -8,7 +8,9 @@ class Game < ActiveRecord::Base
   def assign_category_ids
     puts "Game id is: #{id}"
     game_id = id
-    @categories = Category.where(id: Category.pluck(:id).sample(1))
+    puts "Number of Categories is: #{num_categories}"
+    num_cats = num_categories.to_i
+    @categories = Category.where(id: Category.pluck(:id).sample(num_cats))
     @categories.map { |cat| cat.game_id = game_id }
     @categories.each(&:save)
   end
