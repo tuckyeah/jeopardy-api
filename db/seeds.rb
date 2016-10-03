@@ -11,23 +11,18 @@ require 'csv'
 # returns an array with each row of the file converted to a hash
 def convert_to_hash
   arr = []
-  1000.times do
   CSV.foreach('lib/seeds/JEOPARDY_CSV.csv',
               headers: true,
               header_converters: -> (h) { h.lstrip.downcase.to_sym }) do |row|
                 arr << row.to_h
               end
-            end
   arr
 end
 
-
 def create_categories(data)
-  data.each do |hsh|
-    categories = Category.all
-    unless categories.where(name: hsh[:category]).length == 1
-      Category.create([{ name: hsh[:category] }])
-    end
+  categories = Category.all
+  unless categories.where(name: data[:category]).length == 1
+    Category.create([{ name: data[:category] }])
   end
 end
 
@@ -46,7 +41,23 @@ def populate_categories(data)
   end
 end
 
+def limit_categories(data)
+  while Category.all.length <= 50 do
+    entry = data[rand(data.length + 1)]
+    create_categories(entry)
+  end
+end
+
+def limit_clues(data)
+  categories = Category.all
+  categories.each do |category|
+    @clues = data.find_all { |hsh| hsh[:category] == category.name }
+    populate_categories(@clues)
+  end
+end
 
 data = convert_to_hash
-create_categories(data)
-populate_categories(data)
+limit_categories(data)
+limit_clues(data)
+# create_categories(data)
+# populate_categories(data)
