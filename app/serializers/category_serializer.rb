@@ -1,3 +1,4 @@
 class CategorySerializer < ActiveModel::Serializer
-  attributes :id, :name, :clues
+  attributes :id, :name, :complete, :clues
+  # has_many :clues
 end

@@ -1,20 +1,27 @@
 class Game < ActiveRecord::Base
-  after_create :assign_id
-  has_many :categories, dependent: :destroy
+  after_create :assign_category_ids, :create_response, :reset_clues
+  has_many :categories
+  has_one :response, as: :user_input
   belongs_to :user
-  accepts_nested_attributes_for :categories
-
-  def assign_id
-    puts "Game id is: #{self.id}"
-    game_id = self.id
-    @categories = Category.where(id: Category.pluck(:id).sample(3))
+  # On creation of a new game, picks three random categories
+  # and updates their game_ids to match this current game id
+  def assign_category_ids
+    puts "Game id is: #{id}"
+    game_id = id
+    @categories = Category.where(id: Category.pluck(:id).sample(1))
     @categories.map { |cat| cat.game_id = game_id }
-    @categories.each { |cat| cat.save }
+    @categories.each(&:save)
   end
 
-# on game creation, pick five categories and update those game_ids to reflect
-# the id of the new game, so they are linked
+  def create_response
+    build_response(game_id: id, user_id: user_id)
+  end
 
-
-
+  def reset_clues
+    @categories = Category.where(game_id: id)
+    @categories.each do |category|
+      category.clues.each { |clue| clue.update_attributes(answered: false) }
+      category.update_attributes(complete: false)
+    end
+  end
 end

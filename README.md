@@ -3,3 +3,10 @@
 # Jeopardy Game - API
 
 Project 2 for GA - WDI. API for Jeopardy Game.
+
+## TO DO
+
+- Adjust serializer to only pass categories, values, and clues (no answers)
+- Write game logic and parser
+- Revisit polymorphic situation with the categories / with responses
+- 

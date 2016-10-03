@@ -1,0 +1,1 @@
+\copy jeopardy(show_number, air_date, round, category, value, question, answer) FROM 'lib/seeds/JEOPARDY_CSV.csv' WITH (FORMAT csv, HEADER true);

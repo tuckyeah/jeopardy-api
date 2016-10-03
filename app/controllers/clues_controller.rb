@@ -1,4 +1,4 @@
-class CluesController < ApplicationController
+class CluesController < ProtectedController
   before_action :set_clue, only: [:show, :update, :destroy]
 
   # GET /clues
@@ -39,6 +39,16 @@ class CluesController < ApplicationController
     end
   end
 
+  def validate_answer
+    @answer = clue_params[:response]
+    @response = Response.find(params[:game_id])
+    @response.update(user_answer: @answer, clue_id: params[:clue_id])
+
+    @response.check_answer(params[:clue_id])
+
+    render json: @response
+  end
+
   # DELETE /clues/1
   # DELETE /clues/1.json
   def destroy
@@ -49,11 +59,12 @@ class CluesController < ApplicationController
 
   private
 
-    def set_clue
-      @clue = Clue.find(params[:id])
-    end
+  def set_clue
+    @clue = Clue.find(params[:id])
+  end
 
-    def clue_params
-      params.require(:clue).permit(:question, :answer, :value, :category_id)
-    end
+  def clue_params
+    params.require(:clue).permit(:question, :answer, :value,
+                                 :category_id, :response)
+  end
 end

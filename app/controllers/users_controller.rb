@@ -1,3 +1,4 @@
+# class UsersController < ApplicationController
 class UsersController < ProtectedController
   skip_before_action :authenticate, only: [:signup, :signin]
 
@@ -54,6 +55,13 @@ class UsersController < ProtectedController
 
   def update
     head :bad_request
+  end
+
+  def reset_score
+    @user = User.find(params[:id])
+    @user.update(score: 0)
+
+    render json: @user
   end
 
   private

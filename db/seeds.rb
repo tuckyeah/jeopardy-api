@@ -30,7 +30,7 @@ def create_categories(data)
 end
 
 def convert_val_to_num(num)
-  num.slice(/\d+/).to_i
+  num.delete(',').slice(/\d+/).to_i
 end
 
 def populate_categories(data)
