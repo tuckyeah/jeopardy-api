@@ -11,7 +11,7 @@ require 'csv'
 # returns an array with each row of the file converted to a hash
 def convert_to_hash
   arr = []
-  CSV.foreach('lib/seeds/small_jeopardy.csv',
+  CSV.foreach('lib/seeds/JEOPARDY_CSV.csv',
               headers: true,
               header_converters: -> (h) { h.lstrip.downcase.to_sym }) do |row|
                 arr << row.to_h
@@ -54,7 +54,7 @@ end
 
 #pick a random number of categories
 
-random_categories = category_hash.keys.sample(3)
+random_categories = category_hash.keys.sample(50)
 
 random_categories.each do |key|
   categories = Category.all
