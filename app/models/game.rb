@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  # after_create :create_response
+  after_create :create_response
   has_one :response
   belongs_to :user
   has_many :clues, through: :game_clues
@@ -15,16 +15,16 @@ class Game < ActiveRecord::Base
   #   @categories.each(&:save)
   # end
 
-  # def create_response
-  #   build_response(game_id: id, user_id: user_id)
-  # end
+  def create_response
+    build_response(game_id: id, user_id: user_id)
+  end
 
   def self.create_for(user_id)
     user = User.find(user_id)
     # num_cats = num_categories.to_i
     this_game = user.games.create
-    [100, 200, 400, 800, 1000].each do |points|
-      Category.where(id: Category.pluck(:id).sample(5)).map do |cat|
+    Category.where(id: Category.pluck(:id).sample(5)).map do |cat|
+      [100, 200, 400, 800, 1000].each do |points|
         if cat.clues.where(value: points).length > 1
           offset_num = cat.clues.where(value: points).length
           clue = cat.clues.where(value: points).offset(rand(offset_num)).first
@@ -36,8 +36,8 @@ class Game < ActiveRecord::Base
     end
     this_game
   end
-  #
-  # validates :game_clues, length: { minimum: 5 }, on: :create
+
+  # validates :game_clues, length: { minimum: 20 }
   # validate :must_have_clues_from_5_categories
   # validate :must_have_proper_range_of_points
   #
@@ -50,7 +50,7 @@ class Game < ActiveRecord::Base
   #  end
   #
   #  def must_have_proper_range_of_points
-  #    if game_clues.pluck(:points).uniq.length < 5
+  #    if game_clues.pluck(:values).uniq.length < 5
   #      errors.add(:game_clues, :invalid)
   #    end
   #  end

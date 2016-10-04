@@ -1,4 +1,5 @@
-class CluesController < ProtectedController
+class CluesController < ApplicationController
+# class CluesController < ProtectedController
   before_action :set_clue, only: [:show, :update, :destroy]
 
   # GET /clues
@@ -65,6 +66,6 @@ class CluesController < ProtectedController
 
   def clue_params
     params.require(:clue).permit(:question, :answer, :value,
-                                 :category_id, :response)
+                                 :category_id, :response, :id)
   end
 end
