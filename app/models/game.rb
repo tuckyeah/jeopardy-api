@@ -1,4 +1,5 @@
 class Game < ActiveRecord::Base
+  require 'csv'
   after_create :assign_category_ids, :create_response, :reset_clues
   has_many :categories
   has_one :response, as: :user_input
@@ -8,7 +9,6 @@ class Game < ActiveRecord::Base
   def assign_category_ids
     puts "Game id is: #{id}"
     game_id = id
-    puts "Number of Categories is: #{num_categories}"
     num_cats = num_categories.to_i
     @categories = Category.where(id: Category.pluck(:id).sample(num_cats))
     @categories.map { |cat| cat.game_id = game_id }
