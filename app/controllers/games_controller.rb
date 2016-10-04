@@ -4,8 +4,8 @@ class GamesController < ProtectedController
   before_action :game_over?, only: [:show]
 
   def index
-    # @games = current_user.games.where(over: true)
-    @games = Game.all
+    @games = current_user.games.where(over: true)
+    # @games = Game.all
     render json: @games
   end
 
@@ -58,7 +58,7 @@ class GamesController < ProtectedController
   end
 
   def set_game
-    @game = Game.find(params[:id])
+    @game = current_user.games.find(params[:id])
   end
 
   def game_over?
