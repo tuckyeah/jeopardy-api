@@ -1,4 +1,4 @@
-class CategoriesController < ApplicationController
+class CategoriesController < ProtectedController
   before_action :set_category, only: [:show, :update, :destroy, :clues]
 
   # GET /categories

@@ -1,4 +1,4 @@
-class GamesController < ApplicationController
+class GamesController < ProtectedController
   before_action :set_game, only: [:show]
   # before_action :update_categories, only: [:show]
   before_action :game_over?, only: [:show]

@@ -28,13 +28,13 @@ class Game < ActiveRecord::Base
     this_game
   end
 
-  def update_categories
-    @clues_left = Game.find(params[:id]).game_clues.length
-    puts "I'm in the Model: #{@clues_left}"
-    # Game.find(params[:id]).decrement(:num_clues)
-    # puts "Number of clues remaining:"
-    # puts "#{Game.find(params[:id])[:num_clues]}"
-  end
+  # def update_categories
+  #   @clues_left = Game.find(params[:id]).game_clues.length
+  #   puts "I'm in the Model: #{@clues_left}"
+  #   # Game.find(params[:id]).decrement(:num_clues)
+  #   # puts "Number of clues remaining:"
+  #   # puts "#{Game.find(params[:id])[:num_clues]}"
+  # end
 
   # validates :game_clues, length: { minimum: 20 }
   # validate :must_have_clues_from_5_categories

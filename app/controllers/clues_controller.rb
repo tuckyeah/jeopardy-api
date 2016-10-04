@@ -46,8 +46,8 @@ class CluesController < ApplicationController
     @response.update(user_answer: @answer, clue_id: params[:clue_id])
 
     Game.find(params[:game_id]).decrement!(:num_clues)
-    puts "Number of clues remaining:"
-    puts "#{Game.find(params[:game_id])[:num_clues]}"
+    # puts "Number of clues remaining:"
+    # puts "#{Game.find(params[:game_id])[:num_clues]}"
 
     @response.check_answer(params[:clue_id])
 

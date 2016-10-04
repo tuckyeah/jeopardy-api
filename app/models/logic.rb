@@ -18,8 +18,6 @@ module Logic
     response = parse(response)
 
     correct = remove_parens(correct) unless include_parens?(correct)
-    puts "answer is: #{correct}"
-    puts "response is: #{response}"
     # uses 'WhiteSimiliarity' gem to create a 'fuzzy' match to account
     # for typos
     fuzzy_match = WhiteSimilarity.similarity(correct, response)
