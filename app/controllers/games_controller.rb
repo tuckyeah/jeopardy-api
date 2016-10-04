@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show]
   # before_action :update_categories, only: [:show]
-  # before_action :game_over?, only: [:show]
+  before_action :game_over?, only: [:show]
 
   def index
     # @games = current_user.games.where(over: true)
@@ -19,7 +19,7 @@ class GamesController < ApplicationController
   # end
 
   def create
-    @game = Game.create_for(game_params[:user_id])
+    @game = Game.create_for(game_params)
     @clues = []
 
     @game.game_clues.each do |game_clue|
@@ -43,6 +43,14 @@ class GamesController < ApplicationController
     head :no_content
   end
 
+  def update_categories
+    @clues_left = Game.find(params[:id]).game_clues.length
+    puts "I'm in the controller: #{@clues_left}"
+    # Game.find(params[:id]).decrement(:num_clues)
+    # puts "Number of clues remaining:"
+    # puts "#{Game.find(params[:id])[:num_clues]}"
+  end
+
   private
 
   def game_params
@@ -53,20 +61,9 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
-  def update_categories
-    puts "update categories ran"
-    @game = Game.find(params[:id])
-    @game.categories.each do |category|
-      if category.clues.where(answered: true).length == category.clues.length
-        category.update_attributes(complete: true)
-      end
-    end
-  end
-
   def game_over?
     @game = Game.find(params[:id])
-    if @game.categories.where(complete: true).length == @game.categories.length
-      @game.update(over: true)
-    end
+    @game.update(over: true) if @game[:num_clues].zero?
+    puts "I RAN"
   end
 end

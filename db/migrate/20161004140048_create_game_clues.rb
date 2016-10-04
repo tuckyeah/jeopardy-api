@@ -4,6 +4,7 @@ class CreateGameClues < ActiveRecord::Migration
       t.references :game, index: true, foreign_key: true
       t.references :clue, index: true, foreign_key: true
       t.references :response, index: true, foreign_key: true
+      t.boolean :clue_answered, default: :false
 
       t.timestamps null: false
     end

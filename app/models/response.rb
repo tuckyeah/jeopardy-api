@@ -8,9 +8,10 @@ class Response < ActiveRecord::Base
   end
 
   def check_answer(clue_id)
+    remove_clue(clue_id)
+
     @right_answer = Clue.find(clue_id).answer
     update_attributes(clue_answer: @right_answer)
-    Clue.find(clue_id).update_attributes(answered: true)
 
     if evaluate_answer(clue_answer, user_answer)
       increment_score(clue_id)
@@ -18,6 +19,12 @@ class Response < ActiveRecord::Base
     else
       update_attributes(correct: false)
     end
+  end
+
+  def remove_clue(clue_id)
+    @game = Game.find(game_id)
+    @game_clue_id = @game.game_clues.where(clue_id: clue_id).ids[0]
+    Game.find(game_id).game_clues.destroy(@game_clue_id)
   end
 
   private

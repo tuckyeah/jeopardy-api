@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(version: 20161004140048) do
     t.integer  "game_id"
     t.integer  "clue_id"
     t.integer  "response_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "clue_answered", default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "game_clues", ["clue_id"], name: "index_game_clues_on_clue_id", using: :btree
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 20161004140048) do
 
   create_table "games", force: :cascade do |t|
     t.boolean  "over",           default: false
+    t.integer  "num_clues",      default: 0
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "user_id"
