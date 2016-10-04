@@ -54,7 +54,7 @@ end
 
 #pick a random number of categories
 
-random_categories = category_hash.keys.sample(50)
+random_categories = category_hash.keys.sample(100)
 
 random_categories.each do |key|
   categories = Category.all

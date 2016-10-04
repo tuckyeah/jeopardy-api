@@ -1,6 +1,6 @@
 class Response < ActiveRecord::Base
   include Logic
-  belongs_to :user_input, polymorphic: true
+  has_many :game_clues
 
   def categories
     @categories = Game.find(id).categories
