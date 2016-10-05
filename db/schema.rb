@@ -87,11 +87,12 @@ ActiveRecord::Schema.define(version: 20161004140048) do
   add_index "responses", ["game_id"], name: "index_responses_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                       null: false
-    t.string   "token",                       null: false
-    t.string   "password_digest",             null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "email",                           null: false
+    t.string   "token",                           null: false
+    t.string   "password_digest",                 null: false
+    t.boolean  "is_admin",        default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "score",           default: 0
     t.string   "name"
   end

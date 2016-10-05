@@ -4,6 +4,7 @@ class UsersController < ProtectedController
   # POST '/sign-up'
   def signup
     user = User.create(user_creds)
+    user.update(is_admin: true) if user.admin?(user_creds)
     if user.valid?
       render json: user, status: :created
     else
@@ -64,6 +65,7 @@ class UsersController < ProtectedController
   end
 
   private
+
 
   def user_creds
     params.require(:credentials)

@@ -23,6 +23,8 @@ class CategoriesController < ProtectedController
   # POST /categories
   # POST /categories.json
   def create
+    return head :unauthorized unless current_user[:is_admin]
+
     @category = Category.new(category_params)
 
     if @category.save
@@ -35,6 +37,7 @@ class CategoriesController < ProtectedController
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
   def update
+    return head :unauthorized unless current_user[:is_admin]
     @category = Category.find(params[:id])
 
     if @category.update(category_params)
@@ -47,7 +50,7 @@ class CategoriesController < ProtectedController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-
+    return head :unauthorized unless current_user[:is_admin]
     puts "you are about to destroy a category in the database. Please don't."
     @category.destroy
 
