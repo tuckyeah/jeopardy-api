@@ -5,7 +5,7 @@ class CluesController < ProtectedController
   # GET /clues
   # GET /clues.json
   def index
-    @clues = Clue.all
+    @clues = current_user.clues.all
 
     render json: @clues
   end
@@ -31,7 +31,7 @@ class CluesController < ProtectedController
   # PATCH/PUT /clues/1
   # PATCH/PUT /clues/1.json
   def update
-    @clue = Clue.find(params[:id])
+    @clue = current_user.clues.find(params[:id])
 
     if @clue.update(clue_params)
       head :no_content
@@ -66,7 +66,7 @@ class CluesController < ProtectedController
   private
 
   def set_clue
-    @clue = Clue.find(params[:id])
+    @clue = current_user.clues.find(params[:id])
   end
 
   def clue_params

@@ -35,7 +35,7 @@ class CategoriesController < ProtectedController
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
   def update
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
 
     if @category.update(category_params)
       head :no_content
@@ -64,7 +64,7 @@ class CategoriesController < ProtectedController
   private
 
   def set_category
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
   end
 
   def category_params
