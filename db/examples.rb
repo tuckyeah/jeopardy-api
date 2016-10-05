@@ -9,6 +9,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# sample users
 %w(antony jeff matt jason).each do |name|
   email = "#{name}@#{name}.com"
   next if User.exists? email: email
@@ -17,4 +18,5 @@
                password_confirmation: nil)
 end
 
-Game.create
+#sample game
+Game.create_for({user_id: 1, num_categories: 5})
