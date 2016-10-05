@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
 
   def self.create_for(params)
     user = User.find(params[:user_id])
-    num_cats = params[:num_categories].to_i
+    params[:num_categories].to_i > 5 ? num_cats = 5 : num_cats = params[:num_categories].to_i > 5
     this_game = user.games.create
     Category.where(id: Category.pluck(:id).sample(num_cats)).map do |cat|
       [100, 200, 400, 800, 1000].each do |points|
