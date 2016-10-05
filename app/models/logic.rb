@@ -21,7 +21,7 @@ module Logic
     # uses 'WhiteSimiliarity' gem to create a 'fuzzy' match to account
     # for typos
     fuzzy_match = WhiteSimilarity.similarity(correct, response)
-    correct == response || fuzzy_match > 0.5
+    correct == response || fuzzy_match > 0.6
   end
 
   def test
