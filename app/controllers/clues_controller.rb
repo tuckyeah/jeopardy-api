@@ -57,6 +57,7 @@ class CluesController < ProtectedController
   # DELETE /clues/1
   # DELETE /clues/1.json
   def destroy
+    puts "you are about to destroy a clue in the database. Please don't."
     @clue.destroy
 
     head :no_content

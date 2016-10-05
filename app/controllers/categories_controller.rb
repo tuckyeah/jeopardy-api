@@ -47,6 +47,7 @@ class CategoriesController < ProtectedController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    puts "you are about to destroy a category in the database. Please don't."
     @category.destroy
 
     head :no_content
