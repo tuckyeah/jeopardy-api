@@ -35,7 +35,7 @@ class CategoriesController < ProtectedController
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
   def update
-    @category = current_user.categories.find(params[:id])
+    @category = Category.find(params[:id])
 
     if @category.update(category_params)
       head :no_content
@@ -47,6 +47,7 @@ class CategoriesController < ProtectedController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+
     puts "you are about to destroy a category in the database. Please don't."
     @category.destroy
 
@@ -64,7 +65,7 @@ class CategoriesController < ProtectedController
   private
 
   def set_category
-    @category = current_user.categories.find(params[:id])
+    @category = Category.find(params[:id])
   end
 
   def category_params

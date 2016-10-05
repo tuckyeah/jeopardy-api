@@ -5,7 +5,7 @@ class CluesController < ProtectedController
   # GET /clues
   # GET /clues.json
   def index
-    @clues = current_user.clues.all
+    @clues = Clue.all
 
     render json: @clues
   end
@@ -31,7 +31,7 @@ class CluesController < ProtectedController
   # PATCH/PUT /clues/1
   # PATCH/PUT /clues/1.json
   def update
-    @clue = current_user.clues.find(params[:id])
+    @clue = Clue.find(params[:id])
 
     if @clue.update(clue_params)
       head :no_content
@@ -57,7 +57,8 @@ class CluesController < ProtectedController
   # DELETE /clues/1
   # DELETE /clues/1.json
   def destroy
-    puts "you are about to destroy a clue in the database. Please don't."
+
+    puts "you are about to destroy a clue in the database. Please don't"
     @clue.destroy
 
     head :no_content
@@ -66,7 +67,7 @@ class CluesController < ProtectedController
   private
 
   def set_clue
-    @clue = current_user.clues.find(params[:id])
+    @clue = Clue.find(params[:id])
   end
 
   def clue_params
