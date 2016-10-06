@@ -11,108 +11,56 @@ require 'csv'
 # returns an array with each row of the file converted to a hash
 def convert_to_hash
   arr = []
-  CSV.foreach('lib/seeds/JEOPARDY_CSV.csv',
+  CSV.foreach('lib/seeds/small_jeopardy.csv',
               headers: true,
               header_converters: -> (h) { h.lstrip.downcase.to_sym }) do |row|
                 arr << row.to_h
               end
-  arr.reject!{|h| h[:question].include? "<a href="}
-  arr.reject!{|h| h[:answer].include? "<a href="}
+  arr.reject!{|h| h[:question].include? "<a href=" }
+  arr.reject!{|h| h[:answer].include? "<a href=" }
+  arr.each {|h| h[:value] = h[:value].rstrip.delete(',').slice(/\d+/).to_i }
   arr
 end
 
 data = convert_to_hash
 
-@amounts = [100, 200, 400, 800, 1000, 1200, 1400, 1600, 1800, 2000]
-
-
 # get all the clues associated with that category
-category_hash = data.group_by{|h| h[:category]}
+category_hash = data.group_by{|h| h[:category] }
 
-# select only categories that have more than 5 clues
-category_hash = category_hash.select {|k, v| v.length >= 5 }
+#get all clues associated with that value
+value_hash = data.group_by {|h| h[:value] }
 
-# category factory
-def create_categories(data)
-  categories = Category.all
-  unless categories.where(name: data[:category]).length == 1
-    Category.create([{ name: data[:category] }])
-  end
-end
+res = category_hash.merge(value_hash)
+
+res.reject! { |k, _v| res[k].length < 5 }
+res.reject! { |k, _v| k.is_a? Fixnum }
 
 def convert_val_to_num(num)
   num.rstrip.delete(',').slice(/\d+/).to_i
 end
 
-# clue factory
-def create_clue(hsh)
-  category_id = Category.where(name: hsh[:category]).ids[0]
-  hsh[:value] = convert_val_to_num(hsh[:value]) if hsh[:value].is_a?(String)
-  Clue.create([{ question: hsh[:question], answer: hsh[:answer],
-                   value: hsh[:value], category_id: category_id }])
+# i'm going to have to change this when we scale to a larger file
+
+res.each_key do | key |
+  categories = Category.all
+    unless categories.where(name: key).length == 1
+      Category.create([{ name: key }])
+    end
 end
 
-#pick a random number of categories
-
-random_categories = category_hash.keys.sample(100)
-
-random_categories.each do |key|
+def make_categories(key)
   categories = Category.all
-  unless categories.where(name: key).length == 1
-    Category.create([{ name: key }])
+    unless categories.where(name: key).length == 1
+      Category.create([{ name: key }])
+    end
+end
+
+res.each_pair do |key, clue_array|
+  make_categories(key)
+  clue_array.each do |clue|
+    category_id = Category.where(name: key).ids[0]
+    clue[:value] = clue[:value].to_i
+    Clue.create([{ question: clue[:question], answer: clue[:answer],
+                   value: clue[:value], category_id: category_id}])
   end
 end
-
-random_categories.each do |cat|
-  clue_list = category_hash[cat]
-  clue_list.each { |clue| create_clue(clue) }
-end
-
-#
-# def populate_categories(data)
-#   data.each do |hsh|
-#     create_clue(hsh)
-#   end
-# end
-#
-# def is_link?(hsh)
-#   hsh[:question].include? '<a href=' or hsh[:answer].include? '<a href='
-# end
-#
-# def create_clue(hsh)
-#   category_id = Category.where(name: hsh[:category]).ids[0]
-#   unless is_link?(hsh)
-#     hsh[:value] = convert_val_to_num(hsh[:value]) if hsh[:value].is_a?(String)
-#     Clue.create([{ question: hsh[:question], answer: hsh[:answer],
-#                    value: hsh[:value], category_id: category_id }])
-#   end
-# end
-#
-# def limit_categories(data)
-#   while Category.all.length <= 50 do
-#     entry = data[rand(data.length + 1)]
-#     create_categories(entry)
-#   end
-# end
-#
-# def limit_clues(data)
-#   categories = Category.all
-#   categories.each do |category|
-#     @clues = data.find_all { |hsh| hsh[:category] == category.name }
-#     populate_categories(@clues)
-#   end
-# end
-#
-# def filter_categories
-#   @categories = Category.all
-#   res = []
-#   @categories.each do |category|
-#     res << category if category.length < 6
-#   end
-# end
-#
-# data = convert_to_hash
-# limit_categories(data)
-# limit_clues(data)
-# create_categories(data)
-# populate_categories(data)
