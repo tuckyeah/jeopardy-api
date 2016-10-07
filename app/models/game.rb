@@ -1,27 +1,22 @@
 class Game < ActiveRecord::Base
   after_create :create_response
-  has_one :response
+  has_many :responses #has many responses
   belongs_to :user
   has_many :clues, through: :game_clues
   has_many :game_clues
 
   def create_response
-    build_response(game_id: id, user_id: user_id)
+    Response.create(game_id: id, user_id: user_id)
   end
 
   def self.create_for(params)
     user = User.find(params[:user_id])
-    params[:num_categories].to_i > 5 ? num_cats = 5 : num_cats = params[:num_categories].to_i
+    # params[:num_categories].to_i > 5 ? num_cats = 5 : num_cats = params[:num_categories].to_i
     this_game = user.games.create
-    Category.where(id: Category.pluck(:id).sample(num_cats)).map do |cat|
+    Category.where(id: Category.pluck(:id).sample(5)).map do |cat|
       [100, 200, 400, 800, 1000].each do |points|
-        if cat.clues.where(value: points).length > 1
-          offset_num = cat.clues.where(value: points).length
-          clue = cat.clues.where(value: points).offset(rand(offset_num)).first
-        else
-          clue = cat.clues.where(value: points).first
-        end
-        this_game.game_clues.create(clue: clue, response_id: this_game[:id]) unless clue.nil?
+        clue = cat.clues.where(value: points).first
+        this_game.game_clues.create(clue: clue)
       end
     end
     this_game.update_attributes(num_clues: this_game.game_clues.length)

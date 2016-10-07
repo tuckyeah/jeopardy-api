@@ -1,11 +1,11 @@
-class GamesController < ProtectedController
+class GamesController < OpenReadController
   before_action :set_game, only: [:show]
   # before_action :update_categories, only: [:show]
   before_action :game_over?, only: [:show]
 
   def index
-    @games = current_user.games.where(over: true)
-    # @games = Game.all
+    # @games = current_user.games.where(over: true)
+    @games = Game.all
     render json: @games
   end
 

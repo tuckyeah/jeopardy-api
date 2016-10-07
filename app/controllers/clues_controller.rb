@@ -1,6 +1,7 @@
 # class CluesController < ApplicationController
-class CluesController < ProtectedController
+class CluesController < OpenReadController
   before_action :set_clue, only: [:show, :update, :destroy]
+  before_action :admin_check, only: [:create, :update, :destroy]
 
   # GET /clues
   # GET /clues.json
@@ -65,6 +66,10 @@ class CluesController < ProtectedController
   end
 
   private
+
+  def admin_check
+    User.where(email: 'admin@admin').id[0] == current_user.id
+  end
 
   def set_clue
     @clue = Clue.find(params[:id])

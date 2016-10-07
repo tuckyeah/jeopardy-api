@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  has_many :clues, -> { order(value: :asc) }
+  has_many :clues, -> { order(value: :desc) }
 end

@@ -1,5 +1,6 @@
-class CategoriesController < ProtectedController
+class CategoriesController < OpenReadController
   before_action :set_category, only: [:show, :update, :destroy, :clues]
+  before_action :admin_check, only: [:create, :update, :destroy]
 
   # GET /categories
   # GET /categories.json
@@ -66,6 +67,11 @@ class CategoriesController < ProtectedController
   end
 
   private
+
+# Double check this?
+  def admin_check
+    User.where(email: 'admin@admin').id[0] == current_user.id
+  end
 
   def set_category
     @category = Category.find(params[:id])
