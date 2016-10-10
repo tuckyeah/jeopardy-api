@@ -18,5 +18,5 @@
                password_confirmation: nil)
 end
 
-#sample game
-Game.create_for({user_id: 1, num_categories: 5})
+# sample game
+Game.create_for(user_id: 1, num_categories: 5)
