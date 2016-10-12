@@ -40,8 +40,9 @@ end
 category_hash.each_key do |cat_key|
   @category = Category.create([{ name: cat_key }])
   value_hash.each_key do |val_key|
-    res = value_hash[val_key].sample(1).first
-    Clue.create([{ question: res[:question], answer: res[:answer],
-                   value: res[:value], category_id: @category[0][:id] }])
+    value_hash[val_key].each do |clue|
+      Clue.create([{ question: clue[:question], answer: clue[:answer],
+                     value: clue[:value], category_id: @category[0][:id] }])
+    end
   end
 end

@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :create_response
-  has_many :responses #has many responses
+  has_many :responses
   belongs_to :user
   has_many :clues, through: :game_clues
   has_many :game_clues
@@ -13,9 +13,10 @@ class Game < ActiveRecord::Base
     user = User.find(params[:user_id])
     params[:num_categories].to_i > 5 ? num_cats = 5 : num_cats = params[:num_categories].to_i
     this_game = user.games.create
-    Category.where(id: Category.pluck(:id).sample(num_cats)).map do |cat|
-      [100, 200, 400, 800, 1000].each do |points|
-        clue = cat.clues.where(value: points).first
+    Category.where(id: Category.pluck(:id)).sample(num_cats).each do |cat|
+      clues = Clue.by_value(cat[:id])
+      clues.each_key do |points|
+        clue = clues[points].sample(1)[0]
         this_game.game_clues.create(clue: clue)
       end
     end
