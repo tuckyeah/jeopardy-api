@@ -1,6 +1,7 @@
 class Clue < ActiveRecord::Base
+  # has_many :game_clues
   belongs_to :category
-  # validates :question, uniqueness: true
+  # accepts_nested_attributes_for :game_clues
 
   def self.by_value(category_id)
     points_hash = Hash.new([])
