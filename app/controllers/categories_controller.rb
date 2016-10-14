@@ -69,7 +69,7 @@ class CategoriesController < OpenReadController
   private
 
   def admin_check
-    User.where(email: 'admin@admin').id[0] == current_user[:id]
+    User.where(email: 'admin@admin').ids[0] == current_user[:id]
   end
 
   def set_category
