@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   after_create :create_response
-  has_many :responses #has many responses
+  has_many :responses, dependent: :destroy
   belongs_to :user
   has_many :clues, through: :game_clues
   has_many :game_clues
