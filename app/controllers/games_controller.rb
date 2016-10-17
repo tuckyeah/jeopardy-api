@@ -37,7 +37,7 @@ class GamesController < ProtectedController
   end
 
   def destroy
-    @game = current_user.games.where(id: params[:id])
+    @game = current_user.games.find_by(id: params[:id])
     @game.destroy
 
     head :no_content
