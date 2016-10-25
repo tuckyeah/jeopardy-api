@@ -14,9 +14,11 @@ class Game < ActiveRecord::Base
     params[:num_categories].to_i > 5 ? num_cats = 5 : num_cats = params[:num_categories].to_i
     this_game = user.games.create
     Category.where(id: Category.pluck(:id).sample(num_cats)).map do |cat|
-      [100, 200, 400, 800, 1000].each do |points|
-        clue = cat.clues.where(value: points).first
+      cat.clues.each do |clue|
         this_game.game_clues.create(clue: clue)
+      # [100, 200, 400, 800, 1000].each do |points|
+      #   clue = cat.clues.where(value: points).first
+      #   this_game.game_clues.create(clue: clue)
       end
     end
     this_game.update_attributes(num_clues: this_game.game_clues.length)
