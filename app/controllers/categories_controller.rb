@@ -52,7 +52,6 @@ class CategoriesController < OpenReadController
   # DELETE /categories/1.json
   def destroy
     return head :unauthorized unless current_user[:is_admin]
-    puts "you are about to destroy a category in the database. Please don't."
     @category.destroy
 
     head :no_content
