@@ -41,7 +41,7 @@ module RailsApiJeopardy
     # Cross-Origin Resource Sharing
     config.middleware.use Rack::Cors do
       allow do
-        origins ENV['CLIENT_ORIGIN'] || 'https://tuckyeah.github.io'
+        origins ENV['CLIENT_ORIGIN'] || 'http://localhost:8080'
         resource '*',
                  headers: :any,
                  methods: [:options, :get,
